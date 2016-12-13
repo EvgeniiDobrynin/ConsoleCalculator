@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleCalculator
@@ -15,44 +16,48 @@ namespace ConsoleCalculator
         public string Calculate(string expression)
         {
             string result;
+            
             queue = Parser.Parse(expression);
 
             if (queue.Count == 1)
-            {
                 calcobject = queue.Dequeue();
-            }
             else
-            {
                 Operate();
-            }
-
+            
             result = calcobject.Value;
             return result;
         }
         private void Operate()
         {
-            double a;
-            double b;
-            double c;            
+            double num1;
+            double num2;
+            double result;            
 
             while (queue.Count >= 1)
             {
                 calcobject = queue.Dequeue();
 
-                if (calcobject.Type == "Number")
+                switch (calcobject.Type)
                 {
-                    stack.Push(calcobject);
-                }
-                else
-                {
-                    b = Parser.StringToDouble(stack.Pop().Value);
-                    a = Parser.StringToDouble(stack.Pop().Value);
-                    c = Dictionaries.operations[calcobject.Value](a, b);
-                    stack.Push(Parser.CreateCalcObject("Number", c.ToString()));
-                }
+                    case "Number":
+                        stack.Push(calcobject);
+                        break;
+                    case "Operator":
+                        num2 = StringToDouble(stack.Pop().Value);
+                        num1 = StringToDouble(stack.Pop().Value);
+                        result = Operations.operations[calcobject.Value](num1, num2);
+                        stack.Push(Parser.CreateCalcObject("Number", result.ToString()));
+                        break;
+                    default:
+                        break;
+                } 
             }
 
             calcobject = stack.Pop();
+        }
+        public static double StringToDouble(string str)
+        {
+            return Convert.ToDouble(str);
         }
     }
 }
