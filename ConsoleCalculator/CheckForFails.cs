@@ -137,11 +137,11 @@ namespace ConsoleCalculator
         }
         private static bool StartWithOperator(string expression)
         {
-            string smth = "+*/";
+            string operators = Constants.operations;
 
-            for (int i = 0; i < smth.Length; i++)
+            for (int i = 0; i < operators.Length; i++)
             {
-                if (expression[0] == smth[i])
+                if (expression[0] == operators[i])
                     return true;
             }
 
