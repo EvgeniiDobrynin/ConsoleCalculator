@@ -13,13 +13,7 @@ namespace ConsoleCalculatorTests
         public void TestInitialize()
         {
             calculator = new Calculator();
-        }
-
-        [TestMethod]
-        public void Empty()
-        {
-            Assert.AreEqual(calculator.Calculate(""), "0");
-        }
+        }        
 
         [TestMethod]
         public void Number1()
@@ -31,24 +25,6 @@ namespace ConsoleCalculatorTests
         public void Number2()
         {
             Assert.AreEqual(calculator.Calculate("22"), "22");
-        }
-
-        [TestMethod]
-        public void Letter()
-        {
-            Assert.AreEqual(calculator.Calculate("a2"), "Введите значения: число, +, -, *, /, (, )");
-        }
-
-        [TestMethod]
-        public void NumberWithOpenBracket()
-        {
-            Assert.AreEqual(calculator.Calculate("(22"), "У Вас больше открывающихся скобок");
-        }
-
-        [TestMethod]
-        public void NumberWithCloseBracket()
-        {
-            Assert.AreEqual(calculator.Calculate("22)"), "У Вас больше закрывающихся скобок");
         }
 
         [TestMethod]
@@ -66,25 +42,25 @@ namespace ConsoleCalculatorTests
         [TestMethod]
         public void SumWithSpaces()
         {
-            Assert.AreEqual(calculator.Calculate("2.2+ 3"), "5,2");
+            Assert.AreEqual(calculator.Calculate("2,2+ 3"), "5,2");
         }
-
+ 
         [TestMethod]
         public void Subtract()
         {
-            Assert.AreEqual(calculator.Calculate("2.2-3"), "-0,8");
+            Assert.AreEqual(calculator.Calculate("2,2-3"), "-0,8");
         }
 
         [TestMethod]
         public void Multiply()
         {
-            Assert.AreEqual(calculator.Calculate("2.2*4"), "8,8");
+            Assert.AreEqual(calculator.Calculate("2,2*4"), "8,8");
         }
         
         [TestMethod]
         public void Divide()
         {
-            Assert.AreEqual(calculator.Calculate("2.2/2"), "1,1");
+            Assert.AreEqual(calculator.Calculate("2,2/2"), "1,1");
         }
 
         [TestMethod]
@@ -121,26 +97,6 @@ namespace ConsoleCalculatorTests
         public void MultipleBrackets()
         {
             Assert.AreEqual(calculator.Calculate("2(2)3"), "12");
-        }
-
-        [TestMethod]
-        public void OperatorsInARow1()
-        {
-            Assert.AreEqual(calculator.Calculate("+*"), "У Вас есть повторяющиеся операторы +*");
-        }
-
-        [TestMethod]
-        public void OperatorsInARow2()
-        {
-            Assert.AreEqual(calculator.Calculate(")5("), "У Вас нарушен порядок скобок");
-        }
-
-        [TestMethod]
-        public void StartWithOperator()
-        {
-            Assert.AreEqual(calculator.Calculate("+4"), "Начните выражение с числа");
-            Assert.AreEqual(calculator.Calculate("*4"), "Начните выражение с числа");
-            Assert.AreEqual(calculator.Calculate("/4"), "Начните выражение с числа");
         }
     }
 }
